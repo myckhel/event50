@@ -12,6 +12,7 @@ import {
   StyleSheet,
   ScrollView,
   View,
+  Platform,
   Text,
   StatusBar,
 } from 'react-native';
@@ -23,6 +24,15 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+
+import AppNavigator from './navigation/AppNavigator';
+
+const Root = () => (
+  <View style={styles.container}>
+    {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+    <AppNavigator />
+  </View>
+)
 
 const App = () => {
   return (
@@ -73,6 +83,10 @@ const App = () => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
   scrollView: {
     backgroundColor: Colors.lighter,
   },
@@ -111,4 +125,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default Root;
