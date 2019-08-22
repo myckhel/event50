@@ -1,8 +1,10 @@
 const tintColor = '#2f95dc';
 
 export default {
-  primary: '#F58634',
+  primary: '#ff4301',
+  secondary: '',
   tintColor,
+  dark: '#252525',
   black: '#000',
   white: '#fff',
   tabIconDefault: '#ccc',
@@ -14,4 +16,10 @@ export default {
   warningText: '#666804',
   noticeBackground: tintColor,
   noticeText: '#fff',
+  success: '#2ecc71',
+  dangerActive: '#ed7669',
+  danger: '#e74c3c',
+  secondary: 'rgba(0,0,0,0.1)',
+  prime: '#0073aa',
+  info: '#3498db',
 };
