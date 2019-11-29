@@ -6,7 +6,7 @@ axios.defaults.baseURL = API_URL;
 axios.defaults.headers.common.Accept = 'application/json';
 axios.defaults.headers.common['X-CSRF-TOKEN'] = CSRF_TOKEN;
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-
+// 
 axios.interceptors.response.use(
   response => response,
   (error) => {
