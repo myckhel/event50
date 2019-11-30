@@ -4,7 +4,6 @@ import {
   ScrollView,
   View,
   TouchableOpacity,
-  // Text,
   StatusBar,
 } from 'react-native';
 
@@ -15,7 +14,6 @@ import Event from '../../components/event'
 
 const Done = ({message}) => (
   <View style={styles.doneContainer}>
-    {/*<i class="fa fa-check"></i>*/}
     <Text style={styles.messageText}>{message}</Text>
   </View>
 )
@@ -27,26 +25,30 @@ class App extends PureComponent {
       events: [
         {
           name: 'CS50 Lecture 2',
-          edate: '2019-11-05',
-        }
+          edate: '2019-12-05',
+        },
+        {
+          name: 'CS50 Lecture 2',
+          edate: '2020-01-05',
+        },
+        {
+          name: 'CS50 Lecture 2',
+          edate: '2020-2-05',
+        },
       ],
       loading: true,
       name: "Michael Ishola",
     }
   }
 
-  static options = {
-    title: '50 Event'
-  }
-
-  componentDidMount(){
+  componentDidMount = () => {
     this.toggleLoading()
+    // this.props.navigation.navigate('Profile')
   }
 
   Header = (props) => {
     return (
       <View style={styles.headerConatainer}>
-        {/*<i style="fa fa-user-circle"></i>*/}
         <Text style={styles.headerText}>Hello! {" "}</Text>
         <Text style={[styles.headerText, styles.headerName]}>{this.state.name}</Text>
       </View>
@@ -98,15 +100,15 @@ class App extends PureComponent {
 
   NoAttendnace = () => (
     <View style={styles.noAttendance}>
-        <View style={{}}>
-            <Text>No Attendance Yet</Text>
-            <Text>Check back later</Text>
-        </View>
-        <View style={{}}>
-            <Text style={{}}>
-                {"{{NOW()}}" }<Text> </Text> {/*<i style="icofont icofont-caret-down text-danger"></i>*/}
-            </Text>
-        </View>
+      <View style={{}}>
+        <Text>No Attendance Yet</Text>
+        <Text>Check back later</Text>
+      </View>
+      <View style={{}}>
+        <Text style={{}}>
+            {new Date()}<Text> </Text> {/*<i style="icofont icofont-caret-down text-danger"></i>*/}
+        </Text>
+      </View>
     </View>
   )
 

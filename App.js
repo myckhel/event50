@@ -6,10 +6,7 @@ import {
   Platform,
   Text,
   StatusBar,
-  // Assets,
 } from 'react-native';
-
-// console.log(Assets)
 
 import AppNavigator from './navigation/AppNavigator';
 

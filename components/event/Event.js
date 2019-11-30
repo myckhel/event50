@@ -1,30 +1,55 @@
-import React, { PureComponent } from 'react'
+import React, { PureComponent, useState, useEffect } from 'react'
 
-import { View, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, TouchableOpacity} from 'react-native'
 
 import colors from '../../constants/Colors'
 import { Text } from '../../components/theme'
 
-export default class Event extends PureComponent {
-  constructor(props) {
-    super(props)
+export default ({event}) => {
+  return (
+    <View style={styles.eventContainer}>
+      <View style={styles.question}>
+        <Text style={styles.eventLabel}>Title: <Text style={styles.eventTitle}>{event.name}</Text></Text>
+        <Text style={styles.eventLabel}>Date: <Text style={styles.eventTitle}>{event.edate}</Text></Text>
+      </View>
+      <Timer event={event} edate={event.edate} />
+      <Marker />
+    </View>
+  )
+}
 
-    this.state = {
-      event: props.event,
-      loading: true,
-    }
-  }
+const Marker = (props) => {
+  return (
+    <View style={styles.marker} >
+      <TouchableOpacity
+        style={[styles.actionBtn, {backgroundColor: colors.danger}]}
+        onClick={() => this.mark(event, 0,() => {this.state.refresh()})}
+         >
+        <Text style={styles.actionText} >Not Attending</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[styles.actionBtn, {backgroundColor: colors.success}]}
+        onClick={() => this.mark(event, 1,() => {this.state.refresh()})}
+        >
+        <Text style={styles.actionText} >Attending</Text>
+      </TouchableOpacity>
+    </View>
+  )
+}
 
-  componentDidMount = () => {
-    this.counter(this.state.event.edate)
-    this.toggleLoading()
-  }
+export const Timer = ({event, edate}) => {
+  const [time, setTime] = useState({days, hours, mins, secs})
+  const [interval, loadInterval] = useState(null)
+  const { days, hours, mins, secs } = time
 
-  componentWillUnmount = () => {
-    clearInterval(this.intervalId)
-  }
+  useEffect(() => {
+    counter(edate)
+    return () => clearInterval(interval)
+  }, [])
 
-  counter = (date) => {
+  const slicer = (num) => ("0" + num).slice(-2)
+
+  const counter = (date) => {
     var countDownDate = new Date(date).getTime();
     // Update the count down every 1 second
     let x = setInterval(() => {
@@ -32,6 +57,7 @@ export default class Event extends PureComponent {
       var now = new Date().getTime();
       // Find the distance between now and the count down date
       var distance = countDownDate - now;
+      // console.log(distance < 0);
 
       // Time calculations for days, hours, minutes and seconds
       var days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -40,73 +66,23 @@ export default class Event extends PureComponent {
       var seconds = Math.floor((distance % (1000 * 60)) / 1000);
       // Output the result"
       // console.log(days);
-      this.setState(prev => ({
-        event: {...prev.event,
-          days: ("0" + days).slice(-2),
-          hours: ("0" + hours).slice(-2),
-          mins: ("0" + minutes).slice(-2),
-          secs: ("0" + seconds).slice(-2),
-        }
-      }))
+      setTime({
+        days: ("0" + days).slice(-2),
+        hours: ("0" + hours).slice(-2),
+        mins: ("0" + minutes).slice(-2),
+        secs: ("0" + seconds).slice(-2),
+      })
       // If the count down is over, hide the event
       if (distance < 0) {
-        clearInterval(this.intervalId);
+        // console.log(interval);
+        clearInterval(interval);
         // $('#question').hide();
       }
     }, 1000);
-    this.intervalId = x
+    // console.log(x);
+    loadInterval(x)
   }
 
-  Event = ({}) => {
-    const { event } = this.state
-    return (
-      <View style={styles.eventContainer}>
-        <View style={styles.question}>
-          <Text style={styles.eventLabel}>Title: <Text style={styles.eventTitle}>{event.name}</Text></Text>
-          <Text style={styles.eventLabel}>Date: <Text style={styles.eventTitle}>{event.edate}</Text></Text>
-        </View>
-        <Timer event={this.state.event} />
-        <this.Marker />
-      </View>
-    )
-  }
-
-  Marker(props){
-    return (
-        <View style={styles.marker} >
-          <TouchableOpacity
-            style={[styles.actionBtn, {backgroundColor: colors.danger}]}
-            onClick={() => this.mark(event, 0,() => {this.state.refresh()})}
-             >
-            {/*<i style="fa fa-thumbs-up"></i>*/}
-            <Text style={styles.actionText} >Not Attending</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.actionBtn, {backgroundColor: colors.success}]}
-            onClick={() => this.mark(event, 1,() => {this.state.refresh()})}
-            >
-            {/*<i style="fa fa-thumbs-down"></i>*/}
-            <Text style={styles.actionText} >Attending</Text>
-          </TouchableOpacity>
-        </View>
-    )
-  }
-
-  toggleLoading = () => {
-    this.setState( prev => ({loading: !prev.loading}))
-  }
-
-  render = () => (
-    <this.Event />
-  )
-
-}
-
-export const Timer = ({event}) => {
-  const { days, hours, mins, secs } = event
-  function slicer(num){
-    return ("0" + num).slice(-2)
-  }
   return (
     <View style={styles.countdown} id="countdown">
       <Text style={styles.elapsed}>Time Left</Text>

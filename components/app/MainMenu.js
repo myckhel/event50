@@ -7,10 +7,10 @@ import color from '../../constants/Colors';
 
 class SideMenu extends PureComponent {
   navigateToScreen = (route) => () => {
-    const navigateAction = NavigationActions.navigate({
-      routeName: route
-    });
-    this.props.navigation.dispatch(navigateAction);
+    // const navigateAction = NavigationActions.navigate({
+    //   routeName: route
+    // });
+    this.props.navigation.navigate(route);
   }
 
   componentDidMount = () => {
@@ -21,20 +21,26 @@ class SideMenu extends PureComponent {
     // console.log('appeard');
   }
 
+  Route = ({to, label}) => {
+    return (
+      <TouchableOpacity onPress={() => typeof to === 'function' ? to() : this.navigateToScreen(to)}
+        style={styles.navSection}>
+        <Text style={styles.navItem} >{label}</Text>
+      </TouchableOpacity>
+    )
+  }
+
   render () {
     return (
       <View style={styles.container}>
         <ScrollView>
-          <TouchableOpacity onPress={this.navigateToScreen('Home')}
-            style={styles.navSection}>
-            {/*<TabBarIconE
-              name={ 'folder-music'}
-            />*/}
-            <Text style={styles.navItem} >Home</Text>
-          </TouchableOpacity>
+          <this.Route to="Home" label="Home" />
+          <this.Route to="Attendance" label="Attendance" />
+          <this.Route to="Profile" label="Profile" />
+          <this.Route to={() => alert('will logout')} label="Logout" />
         </ScrollView>
         <View style={styles.footerContainer}>
-          <Text style={styles.footerText}>copyright c 2019 Todey Music Player</Text>
+          <Text style={styles.footerText}>copyright c 2019 Event 50</Text>
         </View>
       </View>
     );

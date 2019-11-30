@@ -8,28 +8,25 @@ import {
   createAppContainer
 } from 'react-navigation';
 
-// import { TopBar } from '../components/TopBar';
 import color from '../constants/Colors';
 import Home from '../screens/Stacks/Home'
+import Profile from '../screens/Stacks/Profile'
 
 import MainMenu from '../components/app/MainMenu'
 
 const MainStack = createStackNavigator({
-  // Music: MusicTab,
   Home: Home,
+  Profile
 }, {
   defaultNavigationOptions: ({navigation}) => ({
     headerStyle: {
       backgroundColor: color.primary,
     },
-    // header: <TopBar navigation={navigation} />,
     headerLeft: () => (
-      <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
+      <TouchableOpacity style={{padding: 5}} onPress={() => navigation.toggleDrawer()}>
         <Text>Menu</Text>
-        {/*<TabBarIconE name="dots-three-vertical" style={[menu]} />*/}
       </TouchableOpacity>
     ),
-    // headerStyle: { paddingRight: 10, paddingLeft: 15 },
     headerTintColor: '#000',
   }),
 })
